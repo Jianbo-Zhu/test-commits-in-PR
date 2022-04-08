@@ -21,3 +21,4 @@ jobs:
         run: |
           git log -1 --pretty=%B
           git log --format=%h -n1
+          git log --graph
