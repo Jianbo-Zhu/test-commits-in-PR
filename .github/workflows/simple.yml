@@ -32,5 +32,7 @@ jobs:
           echo $msg
           tokens=( $msg )
           echo ${tokens[*]}
-          git log -n 1 --pretty=format:%s ${tokens[1]}
+          hash=${tokens[1]:0:7}
+          echo $hash
+          git log -n 1 --pretty=format:%s $hash
 
