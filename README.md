@@ -1,23 +1,20 @@
-# test-commits-in-PR
+# How to get the last commit hash and message for a PR in Github workflow
 
+1. Pass additional parameter `fetch-depth=0` to the checkout action as below
+
+```yml
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+```
+2. check if triggered by Pull Request by checking the environment variable `GITHUB_REF`, if it's ending with **merge**, it means it's a PR.
+
+3. get the hash and message of the last commit with following commands
+4. 
 ``` bash
-# get last commit message
-git log -1 --pretty=%B
-
-# get last commit hash
-git log --format=%h -n1
+tmp=`git log -1 --pretty=format:%s`
+tokens=( $tmp )
+hash=${tokens[1]:0:7}
+git log -n 1 --pretty=format:%s $hash
 ```
-
-
-The output from the workflow triggered by PR
-```
-Merge 862a40feb1d968dc5672b8b543f5196755460251 into d362362ce4a2e76348fb165abf0ea3e32d09405e
-
-417371b
-```
-
-|commit # of the branch|commit message of the branch| commit # from the PR| commit message from the PR|
-|---|---|---|---|
-862a40feb1d968dc5672b8b543f5196755460251|3rd commit|417371b|Merge 862a40feb1d968dc5672b8b543f5196755460251 into d362362ce4a2e76348fb165abf0ea3e32d09405e
-6308fd8ce02e4995c5ce0d588400793195a4e200|4th commit|676fb1f|Merge 6308fd8ce02e4995c5ce0d588400793195a4e200 into d362362ce4a2e76348fb165abf0ea3e32d09405e
-
