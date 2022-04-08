@@ -30,7 +30,7 @@ jobs:
         run: |
           msg=`git log -1 --pretty=format:%s`
           echo $msg
-          tokens={ $msg }
+          tokens=( $msg )
           echo ${tokens[*]}
           git log -n 1 --pretty=format:%s ${tokens[1]}
 
