@@ -25,10 +25,12 @@ jobs:
           echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
           echo "GITHUB_SHA: ${GITHUB_SHA}"
           echo "GITHUB_REF: ${GITHUB_REF}"
-          
+
       - name: Run a multi-line script
         run: |
           msg=`git log -1 --pretty=format:%s`
+          echo $msg
           tokens={ $msg }
-          git log -n 1 --pretty=format:%s tokens[1]
+          echo ${tokens[*]}
+          git log -n 1 --pretty=format:%s ${tokens[1]}
 
