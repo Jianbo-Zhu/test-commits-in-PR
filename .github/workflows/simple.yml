@@ -13,11 +13,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+        with:
+          fetch-depth: 2
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: |
+          echo "Home: ${HOME}"
+          echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
+          echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
+          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+          echo "GITHUB_EVENT_NAME: ${GITHUB_EVENT_NAME}"
+          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+          echo "GITHUB_SHA: ${GITHUB_SHA}"
+          echo "GITHUB_REF: ${GITHUB_REF}"
 
       - name: Run a multi-line script
         run: |
-          git log -1 --pretty=%B
-          git log --format=%h -n1
+          git log --graph
+          msg=`git log -1 --pretty=format:%s`
+          echo $msg
+          tokens=( $msg )
+          echo ${tokens[*]}
+          hash=${tokens[1]:0:7}
+          echo $hash
+          git log -n 1 --pretty=format:%s $hash
+
